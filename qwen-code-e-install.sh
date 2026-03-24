@@ -1,5 +1,5 @@
 #!/bin/bash
-# install-qwen-code-e.sh - 安装 Qwen Code Enhanced 版本
+# qwen-code-e-install.sh - 安装 Qwen Code Enhanced 版本
 
 set -e
 
@@ -24,16 +24,20 @@ fi
 
 echo "✅ 依赖检查通过"
 
-# 创建临时目录
-TEMP_DIR=$(mktemp -d)
-trap "rm -rf $TEMP_DIR" EXIT
+# 创建固定目录（不在临时目录中）
+INSTALL_DIR="$HOME/.qwen-code-e-src"
+echo "📂 源码将安装到: $INSTALL_DIR"
 
-cd "$TEMP_DIR"
+# 如果目录已存在，先删除
+if [ -d "$INSTALL_DIR" ]; then
+    echo "🗑️  删除旧版本..."
+    rm -rf "$INSTALL_DIR"
+fi
 
 # 克隆仓库
 echo "🔄 克隆仓库..."
-git clone --depth 1 -b "$BRANCH" "$REPO_URL" qwen-code
-cd qwen-code
+git clone --depth 1 -b "$BRANCH" "$REPO_URL" "$INSTALL_DIR"
+cd "$INSTALL_DIR"
 
 # 应用补丁
 echo "🔧 应用自定义补丁..."
@@ -44,7 +48,7 @@ echo "🏗️  构建项目..."
 npm install
 npm run build
 
-# 安装所有包到全局（包括依赖）
+# 安装所有包到全局（使用 file: 引用，保持链接有效）
 echo "📦 安装到全局..."
 npm install -g ./packages/core
 npm install -g ./packages/web-templates
@@ -57,5 +61,7 @@ echo "版本信息:"
 qwen --version
 
 echo ""
-echo "💡 源码位置: $TEMP_DIR/qwen-code（可删除）"
-echo "💡 如需卸载: npm uninstall -g @qwen-code/qwen-code @qwen-code/qwen-code-core @qwen-code/web-templates"
+echo "💡 源码位置: $INSTALL_DIR"
+echo "💡 如需卸载:"
+echo "   npm uninstall -g @qwen-code/qwen-code @qwen-code/qwen-code-core @qwen-code/web-templates"
+echo "   rm -rf $INSTALL_DIR"
