@@ -37,7 +37,7 @@ cd qwen-code
 
 # 应用补丁
 echo "🔧 应用自定义补丁..."
-node patch-qwencode.cjs
+node qwen-code-e-patch.cjs
 
 # 构建所有包
 echo "🏗️  构建项目..."

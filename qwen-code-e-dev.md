@@ -18,7 +18,7 @@
 
 ### 3. 补丁脚本
 
-- **文件**: `patch-qwencode.cjs`
+- **文件**: `qwen-code-e-patch.cjs`
 - **作用**: 自动化应用上述补丁
 
 ## 🔧 日常开发流程
@@ -45,7 +45,7 @@ git push origin main
 
 ```bash
 git pull upstream main
-node patch-qwencode.cjs
+node qwen-code-e-patch.cjs
 npm run build
 npm link --prefix packages/cli
 qwen --version
