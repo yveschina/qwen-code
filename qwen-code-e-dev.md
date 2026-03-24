@@ -56,7 +56,7 @@ qwen --version
 用户只需运行：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yveschina/qwen-code/main/install-qwen-code-e.sh | bash
+curl -fsSL https://raw.githubusercontent.com/yveschina/qwen-code/main/qwen-code-e-install.sh | bash
 ```
 
 ## 🚀 常用命令
@@ -72,4 +72,4 @@ npm run lint        # 代码检查
 
 ---
 
-_专注核心开发，分发使用 install-qwen-code-e.sh_
+_专注核心开发，分发使用 qwen-code-e-install.sh_
