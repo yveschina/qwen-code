@@ -74,6 +74,15 @@ const HistoryItemDisplayComponent: React.FC<HistoryItemDisplayProps> = ({
       : 1;
 
   const itemForDisplay = useMemo(() => escapeAnsiCtrlCodes(item), [item]);
+
+  // [patch] 隐藏 thinking 内容
+  if (
+    item.type === 'gemini_thought' ||
+    item.type === 'gemini_thought_content'
+  ) {
+    return null;
+  }
+
   const contentWidth = terminalWidth - 4;
   const boxWidth = mainAreaWidth || contentWidth;
 

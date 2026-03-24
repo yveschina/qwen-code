@@ -560,8 +560,14 @@ export const AppContainer = (props: AppContainerProps) => {
       openApprovalModeDialog,
       quit: (messages: HistoryItem[]) => {
         setQuittingMessages(messages);
+        setUpdateInfo(null);
         setTimeout(async () => {
-          await runExitCleanup();
+          try {
+            await runExitCleanup();
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          } catch (_e) {
+            // Ignore cleanup errors during exit
+          }
           process.exit(0);
         }, 100);
       },
