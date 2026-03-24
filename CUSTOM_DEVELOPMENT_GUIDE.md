@@ -82,9 +82,49 @@ git commit -m "chore: upgrade to latest upstream + apply patches"
 git push origin main
 ```
 
-## 📦 打包分发包（用于其他 Mac 设备）
+## 📦 打包分发包（用于其他设备）
 
-### 方法一：打包为 tar.gz（推荐）
+### 方法一：打包为独立二进制文件（推荐 - 无需 Node.js）
+
+适用于目标机器没有安装 Node.js 的场景。
+
+#### 1. 安装打包工具
+
+```bash
+npm install -g pkg
+```
+
+#### 2. 一键打包所有平台
+
+```bash
+chmod +x build-binary.sh
+./build-binary.sh
+```
+
+这会生成以下文件：
+
+```
+dist-bin/
+├── qwen-macos-x64      # Intel Mac
+├── qwen-macos-arm64    # M1/M2 Mac ✅
+├── qwen-linux-x64      # Linux
+└── qwen-win.exe        # Windows
+```
+
+#### 3. 分发和使用
+
+```bash
+# 直接运行（无需安装 Node.js）
+./qwen-macos-arm64  # M1/M2 Mac
+./qwen-macos-x64    # Intel Mac
+./qwen-linux-x64    # Linux
+```
+
+> 💡 **M1/M2 Mac 完全支持**：使用 `qwen-macos-arm64` 版本获得原生性能
+
+### 方法二：打包为源码包（需 Node.js 环境）
+
+#### 方式 A: tar.gz 格式
 
 ```bash
 # 1. 构建项目
@@ -106,7 +146,7 @@ tar -czf qwen-code-custom.tar.gz qwen-code-cli patch-qwencode.cjs
 ls -lh qwen-code-custom.tar.gz
 ```
 
-### 方法二：使用 npm pack（官方推荐）
+#### 方式 B: npm 包格式
 
 ```bash
 # 1. 进入 CLI 目录
@@ -119,7 +159,7 @@ npm pack
 ls *.tgz
 ```
 
-## 💻 在其他 Mac 设备上安装
+## 💻 在其他设备上安装
 
 ### 安装前置条件
 
