@@ -1,12 +1,12 @@
 #!/bin/bash
-# install-custom-qwen.sh - 安装自定义版本的 Qwen Code
+# install-qwen-code-e.sh - 安装 Qwen Code Enhanced 版本
 
 set -e
 
 REPO_URL="https://github.com/yveschina/qwen-code.git"
 BRANCH="main"
 
-echo "📥 安装自定义 Qwen Code..."
+echo "📥 安装 Qwen Code Enhanced..."
 
 # 检查依赖
 for cmd in git node npm; do
@@ -39,13 +39,15 @@ cd qwen-code
 echo "🔧 应用自定义补丁..."
 node patch-qwencode.cjs
 
-# 构建
+# 构建所有包
 echo "🏗️  构建项目..."
 npm install
 npm run build
 
-# 链接安装
-echo "🔗 安装到全局..."
+# 安装所有包到全局（包括依赖）
+echo "📦 安装到全局..."
+npm install -g ./packages/core
+npm install -g ./packages/web-templates
 npm link --prefix packages/cli
 
 # 验证
@@ -55,5 +57,5 @@ echo "版本信息:"
 qwen --version
 
 echo ""
-echo "💡 源码位置: $TEMP_DIR/qwen-code"
-echo "💡 如需卸载: npm uninstall -g @qwen-code/qwen-code"
+echo "💡 源码位置: $TEMP_DIR/qwen-code（可删除）"
+echo "💡 如需卸载: npm uninstall -g @qwen-code/qwen-code @qwen-code/qwen-code-core @qwen-code/web-templates"
