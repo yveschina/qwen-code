@@ -47,6 +47,7 @@ node qwen-code-e-patch.cjs
 echo "🏗️  构建项目..."
 npm install
 npm run build
+npm run bundle
 
 # 安装所有包到全局（使用 file: 引用，保持链接有效）
 echo "📦 安装到全局..."
